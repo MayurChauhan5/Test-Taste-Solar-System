@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Test_Taste_Console_Application.Domain.DataTransferObjects;
 
 namespace Test_Taste_Console_Application.Domain.Objects
@@ -13,6 +14,27 @@ namespace Test_Taste_Console_Application.Domain.Objects
         public float AverageMoonGravity
         {
             get => 0.0f;
+        }
+
+        public double? AverageMoonTemperatureKelvin
+        {
+            get
+            {
+                // Select only moons with available temperature data.
+                var temperatures = Moons
+                    .Where(m => m.AverageTemperatureKelvin.HasValue)
+                    .Select(m => (double)m.AverageTemperatureKelvin.Value)
+                    .ToList();
+
+                // Return null if no moon has temperature data.
+                if (!temperatures.Any())
+                {
+                    return null;
+                }
+
+                // Calculate the average temperature.
+                return temperatures.Average();
+            }
         }
 
         public Planet(PlanetDto planetDto)
