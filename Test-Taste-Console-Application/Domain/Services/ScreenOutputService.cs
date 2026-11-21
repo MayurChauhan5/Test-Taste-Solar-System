@@ -213,8 +213,8 @@ namespace Test_Taste_Console_Application.Domain.Services
             foreach (Planet planet in planets)
             {
                 string averageTemperature =
-                    planet.AverageMoonTemperatureKelvin.HasValue
-                        ? planet.AverageMoonTemperatureKelvin.Value.ToString("F2")
+                    planet.AvgTemp.HasValue
+                        ? planet.AvgTemp.Value.ToString("F2")
                         : "N/A";
 
                 ConsoleWriter.CreateText(

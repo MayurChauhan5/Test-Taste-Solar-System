@@ -16,33 +16,16 @@ namespace Test_Taste_Console_Application.Domain.Objects
             get => 0.0f;
         }
 
-        public double? AverageMoonTemperatureKelvin
-        {
-            get
-            {
-                // Select only moons with available temperature data.
-                var temperatures = Moons
-                    .Where(m => m.AverageTemperatureKelvin.HasValue)
-                    .Select(m => (double)m.AverageTemperatureKelvin.Value)
-                    .ToList();
-
-                // Return null if no moon has temperature data.
-                if (!temperatures.Any())
-                {
-                    return null;
-                }
-
-                // Calculate the average temperature.
-                return temperatures.Average();
-            }
-        }
-
+        // Average temperature of the moon in Kelvin.
+        public double? AvgTemp { get; set; }
         public Planet(PlanetDto planetDto)
         {
             Id = planetDto.Id;
             SemiMajorAxis = planetDto.SemiMajorAxis;
             Moons = new Collection<Moon>();
-            if(planetDto.Moons != null)
+            AvgTemp = planetDto.AvgTemp;
+
+            if (planetDto.Moons != null)
             {
                 foreach (MoonDto moonDto in planetDto.Moons)
                 {
